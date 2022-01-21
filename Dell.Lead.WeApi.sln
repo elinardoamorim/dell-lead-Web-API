@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dell.Lead.WeApi", "Dell.Lead.WeApi\Dell.Lead.WeApi.csproj", "{ACEC77BA-82F1-4462-B2AF-524E0CFF7A3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dell.Lead.WeApi", "Dell.Lead.WeApi\Dell.Lead.WeApi.csproj", "{ACEC77BA-82F1-4462-B2AF-524E0CFF7A3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

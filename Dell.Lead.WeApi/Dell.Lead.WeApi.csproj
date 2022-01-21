@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Evolve" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
       <PrivateAssets>all</PrivateAssets>
@@ -24,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="db\dataset\" />
-    <Folder Include="db\migrations\" />
   </ItemGroup>
 
 </Project>

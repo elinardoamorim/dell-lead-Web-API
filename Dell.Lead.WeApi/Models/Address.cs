@@ -17,6 +17,9 @@ namespace Dell.Lead.WeApi.Models
         public string City { get; set; }
         [Column("state")]
         public string State { get; set; }
+        [Column("cep")]
+        public string Cep { get; set; }
+        [Column("employee")]
         public Employee Employee { get; set; }
     }
 }

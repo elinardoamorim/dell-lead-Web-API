@@ -1,4 +1,8 @@
+using Dell.Lead.WeApi.Business;
+using Dell.Lead.WeApi.Business.Implementation;
 using Dell.Lead.WeApi.Models.Context;
+using Dell.Lead.WeApi.Repositories;
+using Dell.Lead.WeApi.Repositories.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,7 +40,7 @@ namespace Dell.Lead.WeApi
 
             services.AddControllers();
 
-            var connection = Configuration.GetConnectionString("MyConnectionDataBase");
+            var connection = Configuration.GetConnectionString("MyConnectDataBase");
             services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(connection));
 
             if (Environment.IsDevelopment())
@@ -50,9 +54,14 @@ namespace Dell.Lead.WeApi
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             }));
+
+            services.AddApiVersioning();
+
+            services.AddScoped<IEmployeeRepository, EmployeeRepositoryImplementation>();
+            services.AddScoped<IEmployeeBusiness, EmployeeBusinessImplementation>();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

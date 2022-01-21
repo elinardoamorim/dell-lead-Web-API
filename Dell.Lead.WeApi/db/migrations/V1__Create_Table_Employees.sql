@@ -1,0 +1,9 @@
+﻿CREATE TABLE employees(
+	id BIGINT IDENTITY(1,1) PRIMARY KEY,
+	name_full VARCHAR(255) NOT NULL,
+	cpf BIGINT UNIQUE NOT NULL,
+	birth_date DATE NOT NULL,
+	phone BIGINT NOT NULL,
+	gender VARCHAR(30) NOT NULL,
+	address_id BIGINT NOT NULL
+);
