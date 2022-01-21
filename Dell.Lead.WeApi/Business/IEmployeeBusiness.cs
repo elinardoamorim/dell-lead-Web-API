@@ -5,11 +5,11 @@ namespace Dell.Lead.WeApi.Business
 {
     public interface IEmployeeBusiness
     {
-        EmployeeVO FindByCpf(int cpf);
+        EmployeeVO FindByCpf(long cpf);
         List<EmployeeVO> FindAll();
         EmployeeVO Create(EmployeeVO employee);
         EmployeeVO Update(EmployeeVO employee);
-        void Delete(int cpf);
+        void Delete(long cpf);
 
     }
 }

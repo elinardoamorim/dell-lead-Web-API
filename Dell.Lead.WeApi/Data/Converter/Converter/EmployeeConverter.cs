@@ -19,6 +19,7 @@ namespace Dell.Lead.WeApi.Data.Converter.Converter
                 Phone = origin.Phone,
                 BirthDate = origin.BirthDate,
                 Gender = origin.Gender,
+                AddressId = origin.Address.Id,
                 Address = new AddressConverter().Parse(origin.Address)
             };
         }

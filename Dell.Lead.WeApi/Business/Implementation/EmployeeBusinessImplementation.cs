@@ -22,7 +22,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
             return _converter.Parse(employeeEntity);
         }
 
-        public void Delete(int cpf)
+        public void Delete(long cpf)
         {
             _employeeRepository.Delete(cpf);
         }
@@ -32,7 +32,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
             return _converter.Parse(_employeeRepository.FindAll());
         }
 
-        public EmployeeVO FindByCpf(int cpf)
+        public EmployeeVO FindByCpf(long cpf)
         {
             return _converter.Parse(_employeeRepository.FindByCpf(cpf));
         }

@@ -5,10 +5,11 @@ namespace Dell.Lead.WeApi.Repositories
 {
     public interface IEmployeeRepository
     {
-        Employee FindByCpf(int cpf);
+        Employee FindByCpf(long cpf);
         List<Employee> FindAll();
         Employee Create(Employee employee);
         Employee Update(Employee employee);
-        void Delete(int cpf);
+        bool IsCpf(long cpf);
+        void Delete(long cpf);
     }
 }

@@ -18,7 +18,8 @@ namespace Dell.Lead.WeApi.Data.Converter.Converter
                 Number = origin.Number,
                 District = origin.District,
                 City = origin.City,
-                State = origin.State
+                State = origin.State,
+                Cep = origin.Cep
             };
         }
 
@@ -38,7 +39,8 @@ namespace Dell.Lead.WeApi.Data.Converter.Converter
                 Number = origin.Number,
                 District = origin.District,
                 City = origin.City,
-                State = origin.State
+                State = origin.State,
+                Cep = origin.Cep
             };
         }
 

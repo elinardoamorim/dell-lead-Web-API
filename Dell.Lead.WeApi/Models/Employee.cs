@@ -10,11 +10,11 @@ namespace Dell.Lead.WeApi.Models
         [Column("name_full")]
         public string NameFull { get; set; }
         [Column("cpf")]
-        public int Cpf { get; set; }
+        public long Cpf { get; set; }
         [Column("birth_date")]
         public DateTime BirthDate { get; set; }
         [Column("phone")]
-        public int Phone { get; set; }
+        public long Phone { get; set; }
         [Column("gender")]
         public string Gender { get; set; }
         [Column("address_id")]
