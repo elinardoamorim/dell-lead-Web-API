@@ -5,19 +5,17 @@ using Dell.Lead.WeApi.Repositories;
 using Dell.Lead.WeApi.Repositories.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace Dell.Lead.WeApi
 {
@@ -55,6 +53,23 @@ namespace Dell.Lead.WeApi
                 .AllowAnyHeader();
             }));
 
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+            .AddXmlSerializerFormatters();
+
+            services.AddSwaggerGen(d =>
+            {
+                d.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Swagger", Version = "v1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                d.IncludeXmlComments(xmlPath);
+            });
+
             services.AddApiVersioning();
 
             services.AddScoped<IEmployeeRepository, EmployeeRepositoryImplementation>();
@@ -69,6 +84,14 @@ namespace Dell.Lead.WeApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseCors();
 
             app.UseHttpsRedirection();
@@ -80,6 +103,7 @@ namespace Dell.Lead.WeApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller}");
             });
         }
 

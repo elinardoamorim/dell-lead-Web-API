@@ -1,11 +1,7 @@
 ﻿using Dell.Lead.WeApi.Business;
 using Dell.Lead.WeApi.Data.VO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Dell.Lead.WeApi.Controllers
 {
