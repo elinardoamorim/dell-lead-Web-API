@@ -1,4 +1,5 @@
-﻿using Dell.Lead.WeApi.Models;
+﻿using Dell.Lead.WeApi.Exceptions;
+using Dell.Lead.WeApi.Models;
 using Dell.Lead.WeApi.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,21 +18,10 @@ namespace Dell.Lead.WeApi.Repositories.Implementation
         }
         public Employee Create(Employee employee)
         {
-            if (IsCpf(employee.Cpf) && Exists(employee.Cpf) == false)
-            {
-                try
-                {
-                    _context.Employees.Add(employee);
-                    _context.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
 
-                return FindByCpf(employee.Cpf);
-            }
-            return null;
+            return employee;
         }
 
         public void Delete(long cpf)
@@ -54,8 +44,7 @@ namespace Dell.Lead.WeApi.Repositories.Implementation
 
         public List<Employee> FindAll()
         {
-            var employess = _context.Employees.Include(a => a.Address).ToList();
-            return employess.OrderBy(a => a.NameFull).ToList();
+            return _context.Employees.Include(a => a.Address).OrderBy(a => a.NameFull).ToList();            
         }
 
         public Employee FindByCpf(long cpf)

@@ -1,0 +1,5 @@
+C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WebAPI.Test.csproj.AssemblyReference.cache
+C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WebAPI.Test.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WebAPI.Test.AssemblyInfoInputs.cache
+C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WebAPI.Test.AssemblyInfo.cs
+C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WebAPI.Test.csproj.CoreCompileInputs.cache

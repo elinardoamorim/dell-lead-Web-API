@@ -1,6 +1,8 @@
 ﻿using Dell.Lead.WeApi.Data.Converter.Converter;
 using Dell.Lead.WeApi.Data.VO;
+using Dell.Lead.WeApi.Exceptions;
 using Dell.Lead.WeApi.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace Dell.Lead.WeApi.Business.Implementation
@@ -18,8 +20,20 @@ namespace Dell.Lead.WeApi.Business.Implementation
         public EmployeeVO Create(EmployeeVO employee)
         {
             var employeeEntity = _converter.Parse(employee);
-            employeeEntity = _employeeRepository.Create(employeeEntity);
-            return _converter.Parse(employeeEntity);
+
+            if(FindByCpf(employeeEntity.Cpf) != null)
+            {
+                throw new ExistCpfException("Já existe um funcionário com este CPF cadastrado");
+            } 
+            else if (!IsCpf(employeeEntity.Cpf))
+            {
+                throw new CpfInvalidException("CPF inválido");
+            } 
+            else
+            {
+                employeeEntity = _employeeRepository.Create(employeeEntity);
+                return _converter.Parse(employeeEntity);
+            }
         }
 
         public void Delete(long cpf)
@@ -34,14 +48,26 @@ namespace Dell.Lead.WeApi.Business.Implementation
 
         public EmployeeVO FindByCpf(long cpf)
         {
-            return _converter.Parse(_employeeRepository.FindByCpf(cpf));
+            if (!IsCpf(cpf)) throw new CpfInvalidException("CPF Inválido");
+            var findEmployee = _employeeRepository.FindByCpf(cpf);
+            if (findEmployee == null) throw new ExistCpfException("Não existe funcionário cadastrado com este CPF");
+            return _converter.Parse(findEmployee);
         }
 
         public EmployeeVO Update(EmployeeVO employee)
         {
             var employeeEntity = _converter.Parse(employee);
-            employeeEntity = _employeeRepository.Update(employeeEntity);
-            return _converter.Parse(employeeEntity);
+            employeeEntity.AddressId = employee.Address.Id;
+            if(FindByCpf(employeeEntity.Cpf) != null)
+            {
+                employeeEntity = _employeeRepository.Update(employeeEntity);
+                return _converter.Parse(employeeEntity);
+            }
+            return null;
+        }
+        public bool IsCpf(long cpf)
+        {
+            return _employeeRepository.IsCpf(cpf);
         }
     }
 }

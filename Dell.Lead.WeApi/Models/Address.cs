@@ -18,7 +18,7 @@ namespace Dell.Lead.WeApi.Models
         [Column("state")]
         public string State { get; set; }
         [Column("cep")]
-        public string Cep { get; set; }
+        public long Cep { get; set; }
         [Column("employee")]
         public Employee Employee { get; set; }
     }
