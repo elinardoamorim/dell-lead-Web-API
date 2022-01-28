@@ -9,7 +9,6 @@ namespace Dell.Lead.WeApi.Repositories
         List<Employee> FindAll();
         Employee Create(Employee employee);
         Employee Update(Employee employee);
-        bool IsCpf(long cpf);
         void Delete(long cpf);
     }
 }

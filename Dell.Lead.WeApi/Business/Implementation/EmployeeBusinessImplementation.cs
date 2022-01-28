@@ -2,6 +2,7 @@
 using Dell.Lead.WeApi.Data.VO;
 using Dell.Lead.WeApi.Exceptions;
 using Dell.Lead.WeApi.Repositories;
+using Dell.Lead.WeApi.Util;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
         {
             var employeeEntity = _converter.Parse(employee);
 
-            if(FindByCpf(employeeEntity.Cpf) != null)
+            if(_employeeRepository.FindByCpf(employee.Cpf) != null)
             {
                 throw new ExistCpfException("Já existe um funcionário com este CPF cadastrado");
             } 
@@ -67,7 +68,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
         }
         public bool IsCpf(long cpf)
         {
-            return _employeeRepository.IsCpf(cpf);
+            return ValidateCpf.IsCpf(cpf);
         }
     }
 }
