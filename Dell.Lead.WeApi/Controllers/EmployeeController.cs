@@ -246,7 +246,6 @@ namespace Dell.Lead.WeApi.Controllers
             try
             {
                 var employee = _employeeBusiness.FindByCpf(cpf);
-                if (employee == null) return BadRequest();
                 _employeeBusiness.Delete(cpf);
                 return NoContent();
             }

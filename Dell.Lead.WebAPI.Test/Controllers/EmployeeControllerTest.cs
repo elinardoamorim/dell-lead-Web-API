@@ -282,5 +282,39 @@ namespace Dell.Lead.WeApi.Test.Controllers
 
         }
 
+        [Fact]
+        public void SucessDelete()
+        {
+            var employeeVO = new EmployeeVO()
+            {
+                NameFull = "Elinardo Amorim",
+                Cpf = 02610260032,
+                BirthDate = Convert.ToDateTime("1987-12-21T00:00:00"),
+                Gender = "Heterossexual",
+                Phone = 88992157596,
+                Address = new AddressVO()
+                {
+                    Street = "Rua Dona Elisa Elpidio",
+                    Number = 541,
+                    District = "Maravilha",
+                    City = "Quixeramobim",
+                    State = "Ceará",
+                    Cep = 63800000
+
+                }
+
+            };
+
+            _mockEmployeeBusiness.Setup(x => x.Delete(It.Is<long>(item => item.Equals(employeeVO.Cpf))));
+
+            var employeeController = EmployeeController(_mockEmployeeBusiness);
+
+            ActionResult<EmployeeVO> response = employeeController.Delete(employeeVO.Cpf);
+            NoContentResult result = (NoContentResult)response.Result;
+
+            Assert.Equal(204, result.StatusCode);
+        }
+
+
     }
 }
