@@ -156,3 +156,4 @@ C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Tes
 C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\ref\Dell.Lead.WeApi.Test.dll
 C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WeApi.Test.pdb
 C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\obj\Debug\net5.0\Dell.Lead.WeApi.Test.genruntimeconfig.cache
+C:\Users\Theo\Documents\EstagioLead\project\Dell.Lead.WeApi\Dell.Lead.WebAPI.Test\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

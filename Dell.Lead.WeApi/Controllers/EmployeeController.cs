@@ -94,7 +94,6 @@ namespace Dell.Lead.WeApi.Controllers
             try
             {
                 var employee = _employeeBusiness.FindByCpf(cpf);
-                if(employee == null) return BadRequest();
                 return Ok(employee);
             }
             catch(CpfInvalidException ex)
@@ -105,6 +104,7 @@ namespace Dell.Lead.WeApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            
             
         }
 
@@ -142,7 +142,6 @@ namespace Dell.Lead.WeApi.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] EmployeeVO employee)
         {
-            if (employee == null) return BadRequest("Funcionário inválido");
             try
             {
                 var newEmployee = _employeeBusiness.Create(employee);
@@ -190,9 +189,8 @@ namespace Dell.Lead.WeApi.Controllers
         /// <response code="200">Retorna o funcionário com as informações atualizadas</response>
         /// <response code="400">Retorna CPF é inválido ou Retorna CPF não cadastrado</response>
         [HttpPut]
-        public ActionResult Put([FromBody] EmployeeVO employee)
+        public ActionResult<EmployeeVO> Put([FromBody] EmployeeVO employee)
         {
-            if (employee == null) return BadRequest("Funcionário inválido");
             try
             {
                 var changerEmployee = _employeeBusiness.Update(employee);
