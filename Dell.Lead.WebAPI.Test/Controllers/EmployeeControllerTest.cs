@@ -13,7 +13,7 @@ namespace Dell.Lead.WeApi.Test.Controllers
     public class EmployeeControllerTest
     {
 
-        private Mock<IEmployeeBusiness> _mockEmployeeBusiness;
+        private readonly Mock<IEmployeeBusiness> _mockEmployeeBusiness;
 
         public EmployeeControllerTest()
         {
@@ -283,7 +283,7 @@ namespace Dell.Lead.WeApi.Test.Controllers
         }
 
         [Fact]
-        public void SucessDelete()
+        public void SuccessDelete()
         {
             var employeeVO = new EmployeeVO()
             {
