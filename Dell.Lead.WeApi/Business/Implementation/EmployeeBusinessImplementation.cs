@@ -12,10 +12,12 @@ namespace Dell.Lead.WeApi.Business.Implementation
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly EmployeeConverter _converter;
+        private readonly IValidateCpf _validateCpf;
 
         public EmployeeBusinessImplementation(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
+            _validateCpf = new ValidateCpf();
             _converter = new EmployeeConverter();
         }
         public EmployeeVO Create(EmployeeVO employee)
@@ -26,7 +28,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
             {
                 throw new ExistCpfException("Já existe um funcionário com este CPF cadastrado");
             } 
-            else if (!IsCpf(employeeEntity.Cpf))
+            else if (!_validateCpf.IsCpf(employeeEntity.Cpf))
             {
                 throw new CpfInvalidException("CPF inválido");
             } 
@@ -49,7 +51,7 @@ namespace Dell.Lead.WeApi.Business.Implementation
 
         public EmployeeVO FindByCpf(long cpf)
         {
-            if (!IsCpf(cpf)) throw new CpfInvalidException("CPF Inválido");
+            if (!_validateCpf.IsCpf(cpf)) throw new CpfInvalidException("CPF Inválido");
             var findEmployee = _employeeRepository.FindByCpf(cpf);
             if (findEmployee == null) throw new ExistCpfException("Não existe funcionário cadastrado com este CPF");
             return _converter.Parse(findEmployee);
@@ -65,10 +67,6 @@ namespace Dell.Lead.WeApi.Business.Implementation
                 return _converter.Parse(employeeEntity);
             }
             return null;
-        }
-        public bool IsCpf(long cpf)
-        {
-            return ValidateCpf.IsCpf(cpf);
         }
     }
 }

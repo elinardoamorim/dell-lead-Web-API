@@ -2,9 +2,9 @@
 
 namespace Dell.Lead.WeApi.Util
 {
-    public static class ValidateCpf
+    public class ValidateCpf : IValidateCpf
     {
-        public static bool IsCpf(long cpf)
+        public bool IsCpf(long cpf)
         {
             string isCpf = Convert.ToString(cpf);
 

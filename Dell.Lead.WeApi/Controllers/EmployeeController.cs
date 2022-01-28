@@ -88,7 +88,7 @@ namespace Dell.Lead.WeApi.Controllers
         /// <returns>Retorna o funcionário pesquisado pelo cpf</returns>
         /// <response code="200">Retorna o funcionário pesquisado</response>
         /// <response code="400">Retorna CPF é inválido ou Retorna CPF não cadastrado</response>
-        [HttpGet("{cpf}")]
+        [HttpGet("find-by-cpf/{cpf}")]
         public ActionResult<EmployeeVO> FindByCpf(long cpf)
         {
             try
@@ -145,7 +145,7 @@ namespace Dell.Lead.WeApi.Controllers
             try
             {
                 var newEmployee = _employeeBusiness.Create(employee);
-                return Ok(newEmployee);
+                return CreatedAtAction("FindByCpf", new { cpf = newEmployee.Cpf }, newEmployee);
             }
             catch(ExistCpfException ex)
             {
