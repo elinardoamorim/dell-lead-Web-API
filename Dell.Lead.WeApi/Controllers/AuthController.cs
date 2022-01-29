@@ -22,7 +22,7 @@ namespace Dell.Lead.WeApi.Controllers
         /// <remarks>
         /// Exemplo:
         ///
-        ///     POST /api/v1/users
+        ///     Post /api/v1/auth/signin
         ///   
         ///        {
         ///        "login": "string",
@@ -30,9 +30,9 @@ namespace Dell.Lead.WeApi.Controllers
         ///        }
         ///
         /// </remarks>
-        /// <returns>Retorna o usuário cadastrado</returns>
-        /// <response code="201">Usuário criado com sucesso e retorna o usuário criado.</response>
-        /// <response code="400">Retorna que falhou a criação do usuário</response>
+        /// <returns>Retorna informações de autenticação</returns>
+        /// <response code="200">Usuário fez login com sucesso</response>
+        /// <response code="401">Informações do usuário incorreto</response>
         [HttpPost("signin")]
         public ActionResult<TokenVO> Signin([FromBody] UserVO user)
         {
@@ -41,7 +41,23 @@ namespace Dell.Lead.WeApi.Controllers
             if(token == null) return Unauthorized();
             return Ok(token);
         }
-
+        /// <summary>
+        /// Renovar token de acesso
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     Post /api/v1/auth/refresh
+        ///   
+        ///        {
+        ///        "acessToken": "string",
+        ///        "refreshToken": "string"
+        ///        }
+        ///
+        /// </remarks>
+        /// <returns>Retorna token de acesso renovado</returns>
+        /// <response code="200">Renovação do token realizado com sucesso</response>
+        /// <response code="400">Retorna que o token esta inválido</response>
         [HttpPost("refresh")]
         public ActionResult<TokenVO> Refresh([FromBody] TokenRefreshVO tokenVO)
         {
@@ -50,7 +66,17 @@ namespace Dell.Lead.WeApi.Controllers
             if(token == null) return BadRequest("Invalid token request");
             return Ok(token);
         }
-
+        /// <summary>
+        /// Realizar logout
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        /// 
+        ///     Patch /api/v1/auth/revoke
+        ///
+        /// </remarks>
+        /// <response code="200">Retorna que o logout foi feito com sucesso</response>
+        /// <response code="400">Retorna que requisão de logout não pode ser realizada</response>
         [HttpPatch("revoke")]
         [Authorize("Bearer")]
         public IActionResult Revoke()
