@@ -43,7 +43,7 @@
              <remarks>
              Exemplo:
             
-                 GET /api/v1/employees/CPF
+                 GET /api/v1/employees/98566745060
                
                     {
                     "code": 0,
@@ -69,6 +69,40 @@
              <returns>Retorna o funcionário pesquisado pelo cpf</returns>
              <response code="200">Retorna o funcionário pesquisado</response>
              <response code="400">Retorna CPF é inválido ou Retorna CPF não cadastrado</response>
+        </member>
+        <member name="M:Dell.Lead.WeApi.Controllers.EmployeeController.FindById(System.Int64)">
+             <summary>
+             Pesquisar funcionário pelo ID.
+             </summary>
+             <remarks>
+             Exemplo:
+            
+                 GET /api/v1/employees/1
+               
+                    {
+                    "code": 0,
+                    "name_full": "string",
+                    "cpf": 0,
+                    "birth_date": "2022-01-24T16:03:16.910Z",
+                    "phone": 0,
+                    "gender": "string",
+                    "address": {
+                      "code": 0,
+                      "street": "string",
+                      "number": 0,
+                      "district": "string",
+                      "city": "string",
+                      "state": "string",
+                      "cep": "string"
+                    }
+                  }
+                
+            
+             </remarks>
+             <param name="id">ID do funcionário que deseja pesquisar</param>
+             <returns>Retorna o funcionário pesquisado pelo ID</returns>
+             <response code="200">Retorna o funcionário pesquisado</response>
+             <response code="400">Retorna Funcionário não cadastrado</response>
         </member>
         <member name="M:Dell.Lead.WeApi.Controllers.EmployeeController.Create(Dell.Lead.WeApi.Data.VO.EmployeeVO)">
              <summary>
@@ -100,7 +134,7 @@
             
              </remarks>
              <returns>Retorna o funcionário cadastrado</returns>
-             <response code="200">Retorna o novo funcionário cadastrado</response>
+             <response code="201">Retorna o novo funcionário cadastrado</response>
              <response code="400">Retorna CPF é inválido ou Retorna CPF não cadastrado</response>
         </member>
         <member name="M:Dell.Lead.WeApi.Controllers.EmployeeController.Put(Dell.Lead.WeApi.Data.VO.EmployeeVO)">
@@ -169,6 +203,45 @@
              <returns>Retorna que o funcionário foi deletado</returns>
              <response code="201">Retorna que o cadastro do funcionário foi deletado</response>
              <response code="400">Retorna CPF é inválido ou Retorna CPF não cadastrado</response>
+        </member>
+        <member name="M:Dell.Lead.WeApi.Controllers.UserController.Create(Dell.Lead.WeApi.Data.VO.UserVO)">
+             <summary>
+             Cadastrar um usuário.
+             </summary>
+             <remarks>
+             Exemplo:
+            
+                 POST /api/v1/users
+               
+                    {
+                    "login": "string",
+                    "password": "string"
+                    }
+            
+             </remarks>
+             <returns>Retorna o usuário cadastrado</returns>
+             <response code="201">Usuário criado com sucesso e retorna o usuário criado.</response>
+             <response code="400">Retorna que falhou a criação do usuário</response>
+        </member>
+        <member name="M:Dell.Lead.WeApi.Controllers.UserController.FindById(System.Int64)">
+             <summary>
+             Pesquisar um usuário pelo ID
+             </summary>
+             <remarks>
+             Exemplo:
+            
+                 GET /api/v1/users/1
+               
+                    {
+                    "login": "string",
+                    "password": "string"
+                    }
+            
+             </remarks>
+             <param name="id">ID do funcionário que deseja pesquisar</param>
+             <returns>Retornar usuário pesquisado pelo ID</returns>
+             <response code="200">Retorna o usuário pesquisado</response>
+             <response code="400">Retorna que o usuário não esta cadastrado</response>
         </member>
         <member name="P:Dell.Lead.WeApi.Data.VO.AddressVO.Id">
             <summary>

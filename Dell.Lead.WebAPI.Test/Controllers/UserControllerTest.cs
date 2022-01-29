@@ -35,13 +35,14 @@ namespace Dell.Lead.WeApi.Test.Controllers
                 Password = "12345"
             };
 
-            _mockUserBusiness.Setup(x => x.Create(It.IsAny<UserVO>())).Returns(true);
+            _mockUserBusiness.Setup(x => x.Create(It.IsAny<UserVO>())).Returns(user);
 
             var userController = UserController(_mockUserBusiness);
             ActionResult<UserVO> response = userController.Create(user);
-            OkResult result = (OkResult)response.Result;
+            CreatedAtActionResult result = (CreatedAtActionResult)response.Result;
 
-            Assert.Equal(200, result.StatusCode);
+            Assert.Equal(201, result.StatusCode);
+            Assert.Equal(user, result.Value);
         }
 
         [Fact]
@@ -49,27 +50,7 @@ namespace Dell.Lead.WeApi.Test.Controllers
         {
             UserVO user = null;
 
-            _mockUserBusiness.Setup(x => x.Create(It.IsAny<UserVO>())).Returns(false);
-
-            var controllerUser = UserController(_mockUserBusiness);
-            ActionResult<UserVO> response = controllerUser.Create(user);
-            BadRequestObjectResult result = (BadRequestObjectResult)response.Result;
-
-            Assert.Equal(400, result.StatusCode);
-            Assert.Equal("Invalid user request", result.Value);
-            
-        }
-
-        [Fact]
-        public void FailCreateUser()
-        {
-            var user = new UserVO()
-            {
-                Login = "anitta",
-                Password = "12345"
-            };
-
-            _mockUserBusiness.Setup(x => x.Create(It.IsAny<UserVO>())).Returns(false);
+            _mockUserBusiness.Setup(x => x.Create(It.IsAny<UserVO>())).Returns(user);
 
             var controllerUser = UserController(_mockUserBusiness);
             ActionResult<UserVO> response = controllerUser.Create(user);
@@ -77,7 +58,27 @@ namespace Dell.Lead.WeApi.Test.Controllers
 
             Assert.Equal(400, result.StatusCode);
             Assert.Equal("Failed to register the user", result.Value);
+            
+        }
+        
+        [Fact]
+        public void FindById()
+        {
+            var user = new UserVO()
+            {
+                Id = 1,
+                Login = "anitta",
+                Password = "12345"
+            };
 
+            _mockUserBusiness.Setup(c => c.FindById(It.IsAny<long>())).Returns(user);
+
+            var userController = UserController(_mockUserBusiness);
+            ActionResult<UserVO> response = userController.FindById(1);
+            OkObjectResult result = (OkObjectResult)response.Result;
+
+            Assert.Equal(200, result.StatusCode);
+            Assert.Equal(user, result.Value);
         }
 
     }

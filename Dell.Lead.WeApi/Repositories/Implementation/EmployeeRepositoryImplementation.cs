@@ -76,6 +76,13 @@ namespace Dell.Lead.WeApi.Repositories.Implementation
             return null;
         }
 
+        public Employee FindById(long id)
+        {
+            var employee = _context.Employees.Include(e => e.Address).Where(e => e.Id.Equals(id)).FirstOrDefault();
+            if (employee == null) return null;
+            return employee;
+        }
+
         public bool Exists(long cpf)
         {
             return _context.Employees.Any(e => e.Cpf.Equals(cpf));

@@ -241,9 +241,9 @@ namespace Dell.Lead.WeApi.Test.Controllers
 
             var employeeController = EmployeeController(_mockEmployeeBusiness);
             ActionResult<EmployeeVO> response = employeeController.Create(employeeVO);
-            OkObjectResult result = (OkObjectResult)response.Result;
+            CreatedAtActionResult result = (CreatedAtActionResult)response.Result;
 
-            Assert.Equal(200, result.StatusCode);
+            Assert.Equal(201, result.StatusCode);
             Assert.Equal(employeeVO, result.Value);
         }
 
@@ -315,6 +315,39 @@ namespace Dell.Lead.WeApi.Test.Controllers
             Assert.Equal(204, result.StatusCode);
         }
 
+        [Fact]
+        public void FindById()
+        {
+            var employeeVO = new EmployeeVO()
+            {
+                NameFull = "Elinardo Amorim",
+                Cpf = 02610260032,
+                BirthDate = Convert.ToDateTime("1987-12-21T00:00:00"),
+                Gender = "Heterossexual",
+                Phone = 88992157596,
+                Address = new AddressVO()
+                {
+                    Street = "Rua Dona Elisa Elpidio",
+                    Number = 541,
+                    District = "Maravilha",
+                    City = "Quixeramobim",
+                    State = "Ceará",
+                    Cep = 63800000
+
+                }
+
+            };
+
+            _mockEmployeeBusiness.Setup(c => c.FindById(It.IsAny<long>())).Returns(employeeVO);
+
+            var employeeController = EmployeeController(_mockEmployeeBusiness);
+            ActionResult<EmployeeVO> response = employeeController.FindById(1);
+            OkObjectResult result = (OkObjectResult) response.Result;
+
+            Assert.Equal(200, result.StatusCode);
+            Assert.Equal(employeeVO, result.Value);
+
+        }
 
     }
 }

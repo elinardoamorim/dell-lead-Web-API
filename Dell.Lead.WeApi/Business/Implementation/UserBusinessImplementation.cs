@@ -1,4 +1,5 @@
-﻿using Dell.Lead.WeApi.Data.VO;
+﻿using Dell.Lead.WeApi.Data.Converter.Converter;
+using Dell.Lead.WeApi.Data.VO;
 using Dell.Lead.WeApi.Models;
 using Dell.Lead.WeApi.Repositories;
 using System;
@@ -10,12 +11,14 @@ namespace Dell.Lead.WeApi.Business.Implementation
     {
 
         private readonly IUserRepository _userRepository;
+        private readonly UserConverter _converter;
 
         public UserBusinessImplementation(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _converter = new UserConverter();
         }
-        public bool Create(UserVO userVO)
+        public UserVO Create(UserVO userVO)
         {
             var pass = _userRepository.ComputeHash(userVO.Password, new SHA256CryptoServiceProvider());
 
@@ -28,7 +31,12 @@ namespace Dell.Lead.WeApi.Business.Implementation
 
             user = _userRepository.Create(user);
 
-            return user == null ? false : true;
+            return _converter.Parse(user);
+        }
+
+        public UserVO FindById(long id)
+        {
+            return _converter.Parse(_userRepository.FindById(id));
         }
     }
 }

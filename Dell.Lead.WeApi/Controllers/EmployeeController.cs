@@ -62,7 +62,7 @@ namespace Dell.Lead.WeApi.Controllers
         /// <remarks>
         /// Exemplo:
         ///
-        ///     GET /api/v1/employees/CPF
+        ///     GET /api/v1/employees/98566745060
         ///   
         ///        {
         ///        "code": 0,
@@ -109,6 +109,46 @@ namespace Dell.Lead.WeApi.Controllers
         }
 
         /// <summary>
+        /// Pesquisar funcionário pelo ID.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     GET /api/v1/employees/1
+        ///   
+        ///        {
+        ///        "code": 0,
+        ///        "name_full": "string",
+        ///        "cpf": 0,
+        ///        "birth_date": "2022-01-24T16:03:16.910Z",
+        ///        "phone": 0,
+        ///        "gender": "string",
+        ///        "address": {
+        ///          "code": 0,
+        ///          "street": "string",
+        ///          "number": 0,
+        ///          "district": "string",
+        ///          "city": "string",
+        ///          "state": "string",
+        ///          "cep": "string"
+        ///        }
+        ///      }
+        ///    
+        ///
+        /// </remarks>
+        /// <param name="id">ID do funcionário que deseja pesquisar</param>
+        /// <returns>Retorna o funcionário pesquisado pelo ID</returns>
+        /// <response code="200">Retorna o funcionário pesquisado</response>
+        /// <response code="400">Retorna Funcionário não cadastrado</response>
+        [HttpGet("find-by-id/{id}")]
+        public ActionResult<EmployeeVO> FindById(long id)
+        {
+            var employee = _employeeBusiness.FindById(id);
+            if (employee == null) return BadRequest("Funcionário não registrado");
+            return Ok(employee);
+        }
+
+        /// <summary>
         /// Cadastrar funcionário.
         /// </summary>
         /// <remarks>
@@ -137,7 +177,7 @@ namespace Dell.Lead.WeApi.Controllers
         ///
         /// </remarks>
         /// <returns>Retorna o funcionário cadastrado</returns>
-        /// <response code="200">Retorna o novo funcionário cadastrado</response>
+        /// <response code="201">Retorna o novo funcionário cadastrado</response>
         /// <response code="400">Retorna CPF é inválido ou Retorna CPF não cadastrado</response>
         [HttpPost]
         public ActionResult Create([FromBody] EmployeeVO employee)
@@ -145,7 +185,7 @@ namespace Dell.Lead.WeApi.Controllers
             try
             {
                 var newEmployee = _employeeBusiness.Create(employee);
-                return CreatedAtAction("FindByCpf", new { cpf = newEmployee.Cpf }, newEmployee);
+                return CreatedAtAction("FindById", new { id = newEmployee.Id }, newEmployee);
             }
             catch(ExistCpfException ex)
             {

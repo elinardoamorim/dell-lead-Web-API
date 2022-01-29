@@ -4,6 +4,7 @@ namespace Dell.Lead.WeApi.Business
 {
     public interface IUserBusiness
     {
-        bool Create(UserVO user);
+        UserVO Create(UserVO user);
+        UserVO FindById(long id);
     }
 }

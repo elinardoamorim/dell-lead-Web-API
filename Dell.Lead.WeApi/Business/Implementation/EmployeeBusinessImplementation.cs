@@ -68,5 +68,10 @@ namespace Dell.Lead.WeApi.Business.Implementation
             }
             return null;
         }
+
+        public EmployeeVO FindById(long id)
+        {
+            return _converter.Parse(_employeeRepository.FindById(id));
+        }
     }
 }

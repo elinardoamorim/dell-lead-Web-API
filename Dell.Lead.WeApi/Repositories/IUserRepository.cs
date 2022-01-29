@@ -12,5 +12,6 @@ namespace Dell.Lead.WeApi.Repositories
         bool RevokeToken(string login);
         User RefreshUserInfo(User user);
         string ComputeHash(string password, SHA256CryptoServiceProvider algorithm);
+        User FindById(long id);
     }
 }

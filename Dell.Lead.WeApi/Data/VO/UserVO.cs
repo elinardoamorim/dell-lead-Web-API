@@ -6,6 +6,9 @@ namespace Dell.Lead.WeApi.Data.VO
 {
     public class UserVO
     {
+        [XmlElement("code")]
+        [JsonPropertyName("code")]
+        public long Id { get; set; }
         [Required]
         [XmlElement("login")]
         [JsonPropertyName("login")]

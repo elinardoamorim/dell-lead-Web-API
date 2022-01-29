@@ -80,5 +80,12 @@ namespace Dell.Lead.WeApi.Repositories.Implementation
         {
             return _context.Users.SingleOrDefault(u => u.Login.Equals(login));
         }
+
+        public User FindById(long id)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.Id.Equals(id));
+            if(user == null) return null;
+            return user;
+        }
     }
 }

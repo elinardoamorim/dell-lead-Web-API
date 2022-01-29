@@ -16,7 +16,23 @@ namespace Dell.Lead.WeApi.Controllers
         {
             _loginBusiness = loginBusiness;
         }
-
+        /// <summary>
+        /// Realizar Login
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST /api/v1/users
+        ///   
+        ///        {
+        ///        "login": "string",
+        ///        "password": "string"
+        ///        }
+        ///
+        /// </remarks>
+        /// <returns>Retorna o usuário cadastrado</returns>
+        /// <response code="201">Usuário criado com sucesso e retorna o usuário criado.</response>
+        /// <response code="400">Retorna que falhou a criação do usuário</response>
         [HttpPost("signin")]
         public ActionResult<TokenVO> Signin([FromBody] UserVO user)
         {

@@ -134,6 +134,5 @@ namespace Dell.Lead.WeApi.Test.Business
             CpfInvalidException exception = Assert.Throws<CpfInvalidException>(result);
             Assert.Equal("CPF inválido", exception.Message);
         }
-
     }
 }

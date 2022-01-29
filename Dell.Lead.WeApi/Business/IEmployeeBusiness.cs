@@ -10,5 +10,6 @@ namespace Dell.Lead.WeApi.Business
         EmployeeVO Create(EmployeeVO employee);
         EmployeeVO Update(EmployeeVO employee);
         void Delete(long cpf);
+        EmployeeVO FindById(long id);
     }
 }
