@@ -1,0 +1,3 @@
+﻿INSERT INTO users (login, password, refresh_token_expiry_time) VALUES 
+('teste', 'A6-65-A4-59-20-42-2F-9D-41-7E-48-67-EF-DC-4F-B8-A0-4A-1F-3F-FF-1F-A0-7E-99-8E-86-F7-F7-A2-7A-E3', '2022-02-04 22:59:18.800'),
+('user', 'A6-65-A4-59-20-42-2F-9D-41-7E-48-67-EF-DC-4F-B8-A0-4A-1F-3F-FF-1F-A0-7E-99-8E-86-F7-F7-A2-7A-E3', '2022-02-04 22:59:18.800')
