@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Dell.Lead.WeApi.Controllers
 {
     [ApiVersion("1")]
-    [Authorize("Bearer")]
+    //[Authorize("Bearer")]
     [ApiController]
     [Route("api/v{version:ApiVersion}/employees")]
     public class EmployeeController : ControllerBase

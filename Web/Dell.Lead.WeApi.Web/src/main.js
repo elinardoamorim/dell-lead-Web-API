@@ -19,6 +19,8 @@ import Dropdown from 'primevue/dropdown'
 import Dialog from 'primevue/dialog'
 import Toast from 'primevue/toast'
 import Toolbar from 'primevue/toolbar'
+import InputMask from 'primevue/inputmask'
+import Calendar from 'primevue/calendar'
 
 const app = createApp(App)
 app.use(PrimeVue)
@@ -35,5 +37,7 @@ app.component('Dropdown', Dropdown)
 app.component('Dialog', Dialog)
 app.component('Toast', Toast)
 app.component('Toolbar', Toolbar)
+app.component('InputMask', InputMask)
+app.component('Calendar', Calendar)
 
 app.mount('#app')

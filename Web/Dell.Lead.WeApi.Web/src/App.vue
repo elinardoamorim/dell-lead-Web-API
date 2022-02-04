@@ -21,19 +21,3 @@ import items from './data/menu';
     }
   }
 </script>
-
-<style lang="scss">
-  body {
-    background-color: #edf0f5;
-    margin: 0;
-  }
-  #app {
-    .d-menubar {
-      .p-menubar {
-        border: none;
-        border-radius: 0;
-        background: linear-gradient(90deg,#0388e5 0,#07bdf4);
-      }
-    }
-  }
-</style>
