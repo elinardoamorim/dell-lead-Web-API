@@ -6,8 +6,8 @@
 			<span>Are you sure you want to proceed?</span>
 		</div>
 		<template #footer>
-			<Button label="No" icon="pi pi-times" @click="cancelBook" class="p-button-text"/>
-			<Button label="Yes" icon="pi pi-check" @click="deleteBook" class="p-button-text" autofocus />
+			<Button label="No" icon="pi pi-times" @click="cancelEmployee" class="p-button-text"/>
+			<Button label="Yes" icon="pi pi-check" @click="deleteEmployee" class="p-button-text" autofocus />
 		</template>
 	</Dialog>
   <div class="content">
@@ -116,7 +116,7 @@
         <Column :exportable="false">
           <template #body="slotProps">
             <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="editEmployee(slotProps.data)" />
-            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteBook(slotProps.data.id)" />
+            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteEmployee(slotProps.data.cpf)" />
           </template>
         </Column>
         <template #empty>
@@ -220,24 +220,40 @@ export default {
       this.clearField();
       this.isSave = true;
       await this.requestPutEmployee(employee);
-    },
-    editEmployee(data) {
-      this.id = data.code;
-      this.name_full = data.name_full;
-      this.cpf = data.cpf;
-      this.birth_date = data.birth_date;
-      this.phone = data.phone;
-      this.gender = data.gender;
-      this.addressId = data.address.code;
-      this.cep = data.address.cep;
-      this.number = data.address.number;
-      this.viaCep.street = data.address.street;
-      this.viaCep.city = data.address.city;
-      this.viaCep.district = data.address.district;
-      this.viaCep.state = data.address.state;
+  },
+  editEmployee(data) {
+    this.id = data.code;
+    this.name_full = data.name_full;
+    this.cpf = data.cpf;
+    this.birth_date = data.birth_date;
+    this.phone = data.phone;
+    this.gender = data.gender;
+    this.addressId = data.address.code;
+    this.cep = data.address.cep;
+    this.number = data.address.number;
+    this.viaCep.street = data.address.street;
+    this.viaCep.city = data.address.city;
+    this.viaCep.district = data.address.district;
+    this.viaCep.state = data.address.state;
 
-      this.isSave = false;
-    },
+    this.isSave = false;
+  },
+  async deleteEmployee(){
+    await this.requestDeleteEmployee(this.cpf);
+    this.displayConfirmation = false;
+    this.clearField();
+    this.isSave = true;
+  },
+  cancelEmployee() {
+    this.cpf= null;
+    this.displayConfirmation = false;
+    this.clearField();
+    this.isSave = true;
+  },
+  confirmDeleteEmployee(value) {
+    this.cpf = value;
+    this.displayConfirmation = true;
+  },
   clearField() {
     this.cpf = null,
     this.name_full = '',

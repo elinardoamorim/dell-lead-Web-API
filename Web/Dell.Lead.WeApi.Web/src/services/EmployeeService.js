@@ -12,4 +12,10 @@ export default class EmployeeServices {
   putEmployee(employee = {}) {
     return axios.put('https://localhost:44373/api/v1/employees', employee)
   }
+
+  deleteEmployee(employeeCpf) {
+    return axios.delete(
+      `https://localhost:44373/api/v1/employees/${employeeCpf}`
+    )
+  }
 }

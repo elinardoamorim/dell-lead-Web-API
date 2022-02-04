@@ -17,14 +17,17 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Dropdown from 'primevue/dropdown'
 import Dialog from 'primevue/dialog'
+import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import Toolbar from 'primevue/toolbar'
 import InputMask from 'primevue/inputmask'
 import Calendar from 'primevue/calendar'
 
 const app = createApp(App)
+
 app.use(PrimeVue)
 app.use(router)
+app.use(ToastService)
 
 app.component('Button', Button)
 app.component('InputText', InputText)
