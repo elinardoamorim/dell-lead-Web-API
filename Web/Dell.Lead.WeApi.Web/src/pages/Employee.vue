@@ -20,7 +20,7 @@
           <div class="content-filter">
             <span class="p-field">
               <h5>CPF</h5>
-              <InputMask id="cpf" v-model="cpf" mask="999.999.999-99" placeholder="000.000.000-00"/>
+              <InputNumber id="cpf" v-model="cpf"/>
             </span>
             <span class="p-field">
               <h5>Nome</h5>
@@ -32,7 +32,7 @@
             </span>
             <span class="p-field">
               <h5>Telefone</h5>
-              <InputMask id="phone" mask="(99)9.9999-9999" placeholder="(99)9.9999-9999" v-model="phone" />
+              <InputNumber id="phone" v-model="phone" />
             </span>
             <span class="p-field">
               <h5>Gênero</h5>
@@ -40,7 +40,7 @@
             </span>
             <span class="p-field">
               <h5>CEP</h5>
-              <InputText id="cep" v-model="cep" @keyup.enter="searchCep" />
+              <InputText id="cep" v-model="cep" @keyup.capture="searchCep" />
             </span>
             <span class="p-field">
               <h5>Rua</h5>
@@ -52,11 +52,11 @@
             </span>
             <span class="p-field">
               <h5>Bairro</h5>
-              <InputText id="district" type="text" v-model="district" />
+              <InputText id="district" type="text" v-model="viaCep.district" />
             </span>
             <span class="p-field">
               <h5>Cidade</h5>
-              <InputText id="city" type="text" v-model="city" />
+              <InputText id="city" type="text" v-model="viaCep.city" />
             </span>
             <span class="p-field">
               <h5>Estado</h5>
@@ -115,7 +115,7 @@
         <Column field="address.cep" header="CEP"></Column>
         <Column :exportable="false">
           <template #body="slotProps">
-            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="editBook(slotProps.data)" />
+            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="editEmployee(slotProps.data)" />
             <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteBook(slotProps.data.id)" />
           </template>
         </Column>
@@ -138,15 +138,21 @@ export default {
     return {
       employee: null,
       employees: [],
+      addressId: null,
       viaCep: {
-        street: ''
+        street: '',
+        district: '',
+        city: '',
+        state: ''
       },
       id: null,
+      cep: null,
       name_full: '',
       cpf: null,
       birth_date: '',
       phone: null,
       gender: '',
+      number: null,
       isSave: true,
       Address: [],
       filters: []
@@ -173,6 +179,77 @@ export default {
   },
   showError() {
       this.$toast.add({severity:'error', summary: 'Error Message', detail:'Message Content', life: 3000});
+  },
+  async save(){
+    let employee = {
+      'name_full': this.name_full,
+      'cpf': this.cpf,
+      'birth_date': this.birth_date,
+      'phone': this.phone,
+      'gender': this.gender,
+    };
+    employee.Address = {
+      'street': this.viaCep.street,
+      'district': this.viaCep.district,
+      'city': this.viaCep.city,
+      'state': this.viaCep.state,
+      'number': this.number,
+      'cep': this.cep
+      };
+      this.clearField();
+      await this.requestPostEmployee(employee);
+  },
+  async update() {
+      let employee = {
+      'code': this.id, 
+      'name_full': this.name_full,
+      'cpf': this.cpf,
+      'birth_date': this.birth_date,
+      'phone': this.phone,
+      'gender': this.gender,
+    };
+    employee.Address = {
+      'code': this.addressId,
+      'street': this.viaCep.street,
+      'district': this.viaCep.district,
+      'city': this.viaCep.city,
+      'state': this.viaCep.state,
+      'number': this.number,
+      'cep': this.cep
+      };
+      this.clearField();
+      this.isSave = true;
+      await this.requestPutEmployee(employee);
+    },
+    editEmployee(data) {
+      this.id = data.code;
+      this.name_full = data.name_full;
+      this.cpf = data.cpf;
+      this.birth_date = data.birth_date;
+      this.phone = data.phone;
+      this.gender = data.gender;
+      this.addressId = data.address.code;
+      this.cep = data.address.cep;
+      this.number = data.address.number;
+      this.viaCep.street = data.address.street;
+      this.viaCep.city = data.address.city;
+      this.viaCep.district = data.address.district;
+      this.viaCep.state = data.address.state;
+
+      this.isSave = false;
+    },
+  clearField() {
+    this.cpf = null,
+    this.name_full = '',
+    this.birth_date = '',
+    this.phone = null,
+    this.gender = '',
+    this.number = null,
+    this.cep = null,
+    this.viaCep.street = '',
+    this.viaCep.district = '',
+    this.viaCep.city = '',
+    this.viaCep.state = ''
   },
   async searchCep(){
     await this.requestGetViaCep(this.cep);
@@ -206,7 +283,37 @@ export default {
       .catch(() => {
         console.log('Ocorreu um erro!')
       });
-  }
+    },
+    async requestPostEmployee(employee = {}){
+      await this.employeeService.postEmployee(employee)
+        .then(() => {
+          this.requestGetEmployees();
+          this.showSuccess();
+        })
+        .catch(error => {
+          this.$toast.add({severity:'error', summary: 'Error Register', detail:`${error.response.data.title}`, life: 3000});
+        });
+    },
+    async requestPutEmployee(employee = {}){
+      await this.employeeService.putEmployee(employee)
+        .then(() => {
+          this.requestGetEmployees();
+          this.showSuccess();
+        })
+        .catch(() => {
+          this.showError();
+        });
+    },
+    async requestDeleteEmployee(cpf){
+      await this.employeeService.deleteEmploye(cpf)
+        .then(() => {
+          this.requestGetEmployees();
+          this.showSuccess();
+        })
+        .catch(() => {
+          this.showError();
+        });
+    }
   }
 }
 </script>
